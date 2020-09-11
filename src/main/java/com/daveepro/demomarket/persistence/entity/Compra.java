@@ -32,6 +32,14 @@ public class Compra {
     private List<ComprasProducto> productos;
 
 
+    public Cliente getCliente() {
+        return cliente;
+    }
+
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
+    }
+
     public List<ComprasProducto> getProductos() {
         return productos;
     }
