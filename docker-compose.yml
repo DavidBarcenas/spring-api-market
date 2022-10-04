@@ -1,0 +1,13 @@
+version: '3'
+services:
+  database:
+    image: 'postgres'
+    restart: 'always'
+    environment:
+      - POSTGRES_USER=marketer
+      - POSTGRES_PASSWORD=secret
+      - POSTGRES_DB=market
+    ports:
+      - '5432:5432'
+    volumes:
+      - ./pg_data:/var/lib/postgresql/data

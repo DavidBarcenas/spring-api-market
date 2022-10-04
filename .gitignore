@@ -32,3 +32,6 @@ out/
 
 ### VS Code ###
 .vscode/
+
+### postgres data ###
+/pg_data
