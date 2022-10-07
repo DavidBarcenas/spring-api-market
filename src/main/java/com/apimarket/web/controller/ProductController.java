@@ -3,8 +3,7 @@ package com.apimarket.web.controller;
 import com.apimarket.domain.Product;
 import com.apimarket.domain.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
@@ -15,23 +14,28 @@ public class ProductController {
     @Autowired
     private ProductService productService;
 
+    @GetMapping()
     public List<Product> getAll() {
         return productService.getAll();
     }
 
-    public Optional<Product> getProduct(int productId) {
-        return productService.getProduct(productId);
+    @GetMapping("/{id}")
+    public Optional<Product> getProduct(@PathVariable int id) {
+        return productService.getProduct(id);
     }
 
-    public Optional<List<Product>> getByCategory(int categoryId) {
-        return productService.getByCategory(categoryId);
+    @GetMapping("/category/{id}")
+    public Optional<List<Product>> getByCategory(@PathVariable int id) {
+        return productService.getByCategory(id);
     }
 
-    public Product save(Product product) {
+    @PostMapping()
+    public Product save(@RequestBody Product product) {
         return productService.save(product);
     }
 
-    public boolean delete(int productId) {
+    @DeleteMapping("/{id}")
+    public boolean delete(@PathVariable("id") int productId) {
         return productService.delete(productId);
     }
 }
