@@ -30,9 +30,10 @@ public class ProductController {
     }
 
     @PostMapping()
-    public Product save(@RequestBody Product product) {
-        return productService.save(product);
-    }
+    public Product save(@RequestBody Product product) { return productService.save(product); }
+
+    @PutMapping("/{id}")
+    public Product edit(@RequestBody Product product, @PathVariable int id) { return productService.edit(product, id); }
 
     @DeleteMapping("/{id}")
     public boolean delete(@PathVariable("id") int productId) {

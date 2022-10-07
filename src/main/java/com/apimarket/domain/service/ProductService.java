@@ -15,23 +15,31 @@ import java.util.Optional;
 public class ProductService {
     @Autowired
     private ProductRepository productRepository;
-
     public List<Product> getAll() {
         return productRepository.getAll();
     }
-
     public Optional<Product> getProduct(int productId) {
         return productRepository.getProduct(productId);
     }
-
     public Optional<List<Product>> getByCategory(int categoryId) {
         return productRepository.getByCategory(categoryId);
     }
-
     public Product save(Product product) {
         return productRepository.save(product);
     }
-
+    public Product edit(Product newProduct, int productId) {
+        return getProduct(productId).map(product -> {
+            product.setName(newProduct.getName());
+            product.setCategoryId(newProduct.getCategoryId());
+            product.setPrice(newProduct.getPrice());
+            product.setStock(newProduct.getStock());
+            product.setActive(newProduct.isActive());
+            return save(product);
+        }).orElseGet(() -> {
+            newProduct.setProductId(productId);
+            return save(newProduct);
+        });
+    }
     public boolean delete(int productId) {
         return getProduct(productId).map(product -> {
             productRepository.delete(productId);
