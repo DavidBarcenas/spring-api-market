@@ -28,17 +28,24 @@ public class ProductController {
 
     @GetMapping("/category/{id}")
     public ResponseEntity<List<Product>> getByCategory(@PathVariable int id) {
-        return productService.getByCategory(id).map(products -> new ResponseEntity<>(products, HttpStatus.OK)).orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
+        return productService.getByCategory(id).map(products -> new ResponseEntity<>(products, HttpStatus.OK))
+                .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
     @PostMapping()
-    public ResponseEntity<Product> save(@RequestBody Product product) { return new ResponseEntity<>(productService.save(product), HttpStatus.CREATED); }
+    public ResponseEntity<Product> save(@RequestBody Product product) {
+        return new ResponseEntity<>(productService.save(product), HttpStatus.CREATED);
+    }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Product> edit(@RequestBody Product product, @PathVariable int id) { return new ResponseEntity<>(productService.edit(product, id), HttpStatus.OK); }
+    public ResponseEntity<Product> edit(@RequestBody Product product, @PathVariable int id) {
+        return new ResponseEntity<>(productService.edit(product, id), HttpStatus.OK);
+    }
 
     @DeleteMapping("/{id}")
     public ResponseEntity delete(@PathVariable("id") int productId) {
-        return productService.delete(productId) ? new ResponseEntity<>(HttpStatus.OK) : new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        return productService.delete(productId)
+                ? new ResponseEntity<>(HttpStatus.OK)
+                : new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 }
