@@ -3,6 +3,8 @@ package com.apimarket.web.controller;
 import com.apimarket.domain.Product;
 import com.apimarket.domain.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -15,28 +17,28 @@ public class ProductController {
     private ProductService productService;
 
     @GetMapping()
-    public List<Product> getAll() {
-        return productService.getAll();
+    public ResponseEntity<List<Product>> getAll() {
+        return new ResponseEntity<>(productService.getAll(), HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
-    public Optional<Product> getProduct(@PathVariable int id) {
-        return productService.getProduct(id);
+    public ResponseEntity<Product> getProduct(@PathVariable int id) {
+        return ResponseEntity.of(productService.getProduct(id));
     }
 
     @GetMapping("/category/{id}")
-    public Optional<List<Product>> getByCategory(@PathVariable int id) {
-        return productService.getByCategory(id);
+    public ResponseEntity<List<Product>> getByCategory(@PathVariable int id) {
+        return productService.getByCategory(id).map(products -> new ResponseEntity<>(products, HttpStatus.OK)).orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
     @PostMapping()
-    public Product save(@RequestBody Product product) { return productService.save(product); }
+    public ResponseEntity<Product> save(@RequestBody Product product) { return new ResponseEntity<>(productService.save(product), HttpStatus.CREATED); }
 
     @PutMapping("/{id}")
-    public Product edit(@RequestBody Product product, @PathVariable int id) { return productService.edit(product, id); }
+    public ResponseEntity<Product> edit(@RequestBody Product product, @PathVariable int id) { return new ResponseEntity<>(productService.edit(product, id), HttpStatus.OK); }
 
     @DeleteMapping("/{id}")
-    public boolean delete(@PathVariable("id") int productId) {
-        return productService.delete(productId);
+    public ResponseEntity delete(@PathVariable("id") int productId) {
+        return productService.delete(productId) ? new ResponseEntity<>(HttpStatus.OK) : new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 }
