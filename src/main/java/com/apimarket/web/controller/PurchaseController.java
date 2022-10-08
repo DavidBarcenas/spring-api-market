@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/purchases")
@@ -22,8 +23,10 @@ public class PurchaseController {
 
     @GetMapping("/client/{id}")
     public ResponseEntity<List<Purchase>> getClient(@PathVariable String id) {
-        return purchaseService.getByClient(id).map(purchases -> new ResponseEntity<>(purchases, HttpStatus.OK)
-                ).orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
+        return purchaseService.getByClient(id)
+                .filter(purchases -> !purchases.isEmpty())
+                .map(purchases -> new ResponseEntity<>(purchases, HttpStatus.OK))
+                .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
     };
 
     @PostMapping()
