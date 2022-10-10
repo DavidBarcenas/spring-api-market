@@ -19,12 +19,14 @@ dependencies {
 	implementation 'io.springfox:springfox-swagger2:3.0.0'
 	implementation 'io.springfox:springfox-swagger-ui:3.0.0'
 	implementation 'io.springfox:springfox-boot-starter:3.0.0'
-	implementation 'io.jsonwebtoken:jjwt-api:0.11.2'
+	implementation 'io.jsonwebtoken:jjwt-api:0.11.5'
+	implementation 'io.jsonwebtoken:jjwt-gson:0.11.5'
 
 	implementation 'org.mapstruct:mapstruct:1.5.2.Final'
 	annotationProcessor 'org.mapstruct:mapstruct-processor:1.5.2.Final'
 
 	runtimeOnly 'org.postgresql:postgresql:42.5.0'
+	runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.11.5'
 
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
